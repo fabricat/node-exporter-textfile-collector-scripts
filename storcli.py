@@ -25,6 +25,7 @@ import json
 import os
 import shlex
 import subprocess
+import sys, traceback
 
 DESCRIPTION = """Parses StorCLI's JSON output and exposes MegaRAID health as
     Prometheus metrics."""
@@ -55,7 +56,7 @@ def main(args):
             elif response['Version']['Driver Name'] == 'mpt3sas':
                 handle_sas_controller(response)
     except KeyError:
-        pass
+        traceback.print_exc()
 
     print_all_metrics(metric_list)
 
